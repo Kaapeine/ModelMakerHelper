@@ -1,0 +1,38 @@
+{
+    "configurations": [
+        {
+            "browse": {
+                "databaseFilename": "",
+                "limitSymbolsToIncludedHeaders": true
+            },
+            "includePath": [
+                "/home/vathsa/gazebo-simulations/devel/include/**",
+                "/home/vathsa/catkin_ws/devel/include/**",
+                "/opt/ros/kinetic/include/**",
+                "/home/vathsa/catkin_ws/src/amcl/include/**",
+                "/home/vathsa/gazebo-simulations/src/hector_gazebo/hector_gazebo_plugins/include/**",
+                "/home/vathsa/gazebo-simulations/src/hector_gazebo/hector_gazebo_thermal_camera/include/**",
+                "/home/vathsa/gazebo-simulations/src/hector_slam/hector_geotiff/include/**",
+                "/home/vathsa/gazebo-simulations/src/hector_slam/hector_map_tools/include/**",
+                "/home/vathsa/gazebo-simulations/src/hector_slam/hector_mapping/include/**",
+                "/home/vathsa/gazebo-simulations/src/hector_slam/hector_marker_drawing/include/**",
+                "/home/vathsa/gazebo-simulations/src/hector_localization/hector_pose_estimation/include/**",
+                "/home/vathsa/gazebo-simulations/src/hector_localization/hector_pose_estimation_core/include/**",
+                "/home/vathsa/gazebo-simulations/src/quadcopter_sim/hector_quadrotor/hector_quadrotor_actions/include/**",
+                "/home/vathsa/gazebo-simulations/src/quadcopter_sim/hector_quadrotor/hector_quadrotor_controller_gazebo/include/**",
+                "/home/vathsa/gazebo-simulations/src/quadcopter_sim/hector_quadrotor/hector_quadrotor_gazebo_plugins/include/**",
+                "/home/vathsa/gazebo-simulations/src/quadcopter_sim/hector_quadrotor/hector_quadrotor_interface/include/**",
+                "/home/vathsa/gazebo-simulations/src/quadcopter_sim/hector_quadrotor/hector_quadrotor_model/include/**",
+                "/home/vathsa/gazebo-simulations/src/quadcopter_sim/hector_quadrotor/hector_quadrotor_pose_estimation/include/**",
+                "/home/vathsa/gazebo-simulations/src/quadcopter_sim/hector_quadrotor/hector_uav_msgs/include/**",
+                "/usr/include/**"
+            ],
+            "name": "ROS",
+            "intelliSenseMode": "gcc-x64",
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "gnu11",
+            "cppStandard": "c++17"
+        }
+    ],
+    "version": 4
+}

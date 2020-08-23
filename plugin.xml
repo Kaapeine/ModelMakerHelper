@@ -1,0 +1,15 @@
+<library path="src">
+  <class name="BasicInterface" type="model_maker_helper.model_maker_helper.BasicInterface" base_class_type="rqt_gui_py::Plugin">
+    <description>
+      Simple, customizble interface to help with URDF modelling for Gazebo and Rviz
+    </description>
+    <qtgui>
+      <group>
+        <label>Actions</label>
+      </group>
+      <label>Model Maker Helper</label>
+      <icon type="theme">system-help</icon>
+      <statustip>Model Maker</statustip>
+    </qtgui>
+  </class>
+</library>
