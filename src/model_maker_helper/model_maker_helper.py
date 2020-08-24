@@ -36,15 +36,15 @@ class BasicInterface(Plugin):
         self._widget = QWidget()
         ui_file = os.path.join(rospkg.RosPack().get_path('model_maker_helper'), 'resource', 'BasicInterface.ui')
         loadUi(ui_file, self._widget)
-        self._widget.setFixedSize(600, 450)
+        self._widget.setFixedWidth(600)
         self._widget.setObjectName('BasicInterfaceUi')
         
-        # Initialize dictionary
-        # self.dict = defaultdict(int)
+        # Initialize dictionaries and other things
+        self.yamlpath = ""
         self.labeldict = {}
         self.valdict = {}
-        self.count = 1 # TO BE CHANGED LATER!!!!!!
-        # self.initializedict()
+        self.textboxdict = {}
+        self.count = 0 
                 
         # Definitions
         self.createvarbtn = self._widget.findChild(QPushButton, 'addnewvariable')
@@ -54,54 +54,91 @@ class BasicInterface(Plugin):
         
         self.form = self._widget.findChild(QFormLayout, 'formLayout')
         
-        self.updatevalbutton = self._widget.findChild(QPushButton, 'updatevalues')
-        self.updatevalbutton.clicked.connect(self.updatevalues)
-        
         self.getyamlbtn = self._widget.findChild(QPushButton, 'getyamlbtn')
         self.getyamlbtn.clicked.connect(self.getyamlpath)
+        
+        self.updatevalbutton = self._widget.findChild(QPushButton, 'updatevalues')
+        self.updatevalbutton.clicked.connect(self.updatevalues)
         
         # Show the widget
         context.add_widget(self._widget)
 
     def createlabel(self):
-        name = self.newvarname.text()
-        names = name.rsplit('/')     
-        self.labeldict[self.count] = name
-        
-        if len(names) is not 2:
-            # self.createvarbtn.setFocus()
+        self.name = self.newvarname.text()
+        self.names = self.name.rsplit('/')     
+                
+        if len(self.names) is not 2:
             self.newvarname.clear()
-            self.newvarname.setPlaceholderText('Enter both parent and property!')
+            self.newvarname.setPlaceholderText('Enter "parent/property"')
             return
+    
+        self.labeldict[self.count] = self.names[1]
         
         # Creating new widgets for the new row
-        self.label = QLabel("{}. Adjust {:s} values of {:s}".format(self.count, names[1], names[0]))
+        self.label = QLabel("{}. Adjust {:s} values of {:s}".format(self.count+1, self.names[1], self.names[0]))
         self.val = QLineEdit()
+        self.textboxdict[self.count] = self.val
         
-        self.valdict[self.count] = self.val
+        #TODO set placeholder text for newly added textboxes
+        # self.val.setPlaceholderText('0.0')
+        # self.val.setAlignment(Qt.AlignCenter)
+        
         self.count += 1
         
+        self.updatefieldsfromyaml()
         self.form.addRow(self.label, self.val)
         
     def getyamlpath(self):
-        fname = QFileDialog.getOpenFileName(self._widget, 'Open file', '/home/',"Yaml File (*.yaml)")
-        print(fname)
+        self.yamlpath = QFileDialog.getOpenFileName(self._widget, 'Open file', '/home/',"Yaml File (*.yaml)")
+        self.updatefieldsfromyaml()
+        if self.yamlpath != ('', ''):
+            self.showaffirmation("Values added from the Yaml file!")
+        
+    def updatefieldsfromyaml(self):
+        if self.yamlpath != ('', '') and self.yamlpath != '' and self.yamlpath is not None:
+            print(self.yamlpath)
+            self.yamlfile = openyamlfile(self.yamlpath)
+            self.yamlfilekeys = self.yamlfile.keys()
+            self.yamlfilevals = self.yamlfile.values()
+            for c in range(self.count):
+                if self.labeldict[c] in self.yamlfilekeys:
+                    self.obj = self.textboxdict[c]
+                    self.obj.setText(str(self.yamlfilevals[c]))
     
     def updatevalues(self):
-        editvalues(self.labeldict, self.valdict)
+        if self.yamlpath == "":
+            self.showmessagebox("Please select a Yaml file!")
+            return
         
+        # Get values from text box objects
+        for c in range(self.count):
+            self.obj = self.textboxdict[c]
+            self.valdict[c] = self.obj.text()
+            
+        print(self.labeldict)
+        print(self.valdict)
+        
+        self.flag = editvalues(self.labeldict, self.valdict, self.yamlpath)
+        if not self.flag:
+            self.showmessagebox("A field has been left empty")
+            self.flag = True
+            
         print('[LOG] Values have been updated!')
+        self.showaffirmation('Values have been updated in the Yaml file')
     
-urdf = ""    
-        
-def geturdf():
-    urdf = rospy.get_param("/robot_description")
-    try:
-        f = open("temp.urdf", "w")
-        f.write(urdf)
-        print("[LOG] Temporary urdf file created!")
-    except Exception as e:
-        print(e)
+    def showmessagebox(self, text):
+            self.msg = QMessageBox()
+            self.msg.setIcon(QMessageBox.Warning)
+            self.msg.setWindowTitle('Warning!')
+            self.msg.setText(text)
+            self.msg.show()
+            
+    def showaffirmation(self, text):
+            self.msg = QMessageBox()
+            self.msg.setIcon(QMessageBox.Warning)
+            self.msg.setWindowTitle('Done!')
+            self.msg.setText(text)
+            self.msg.show()
     
     
     
@@ -120,12 +157,16 @@ def geturdf():
 
 
 
-
-
-
-
-
-
+# urdf = ""    
+        
+# def geturdf():
+#     urdf = rospy.get_param("/robot_description")
+#     try:
+#         f = open("temp.urdf", "w")
+#         f.write(urdf)
+#         print("[LOG] Temporary urdf file created!")
+#     except Exception as e:
+#         print(e)
 
 
 # import os
