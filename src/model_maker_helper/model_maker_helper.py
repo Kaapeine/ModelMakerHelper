@@ -105,12 +105,18 @@ class BasicInterface(Plugin):
     def getyamlpath(self):
         self.yamlpath = QFileDialog.getOpenFileName(self._widget, 'Open file', '/home/',"Yaml File (*.yaml)")
         self.updatefieldsfromyaml()
-        if self.yamlpath != ('', ''):
+        if self.updatefieldsfromyaml():
             self.showaffirmation("Values added from the Yaml file!")
+        else:
+            self.showmessagebox('Check your YAML file for bad formatting!')
         
     def updatefieldsfromyaml(self):
-        if self.yamlpath != ('', '') and self.yamlpath != '' and self.yamlpath is not None:
+        # if self.yamlpath != ('', '') and self.yamlpath != '' and self.yamlpath is not None:
+        if self.yamlpath != '':
             self.yamlfile = openyamlfile(self.yamlpath)
+            if not self.yamlfile:
+                return False
+            
             self.yamlfilekeys = self.yamlfile.keys()
             self.yamlfilevals = self.yamlfile.values()
             for c in range(self.count):
@@ -118,6 +124,7 @@ class BasicInterface(Plugin):
                     self.obj = self.textboxdict[c]
                     pos = self.yamlfilekeys.index(self.labeldict[c])
                     self.obj.setText(str(self.yamlfilevals[pos]))
+            return True
     
     def updatevalues(self):
         if self.yamlpath == "":
@@ -128,7 +135,7 @@ class BasicInterface(Plugin):
         for c in range(self.count):
             self.obj = self.textboxdict[c]
             self.valdict[c] = self.obj.text()
-                    
+            
         flag = True
         flag = editvalues(self.labeldict, self.valdict, self.yamlpath)
         if not flag:

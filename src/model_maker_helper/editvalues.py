@@ -5,8 +5,11 @@ import os
 import yaml
 
 def openyamlfile(yamlpath):
-    with open(yamlpath[0]) as f:
-        return yaml.load(f)
+    try:
+        with open(yamlpath[0]) as f:
+            return yaml.load(f)
+    except:
+        return False
       
 def editvalues(labeldict, valdict, yamlpath):
     yamlfile = openyamlfile(yamlpath)
