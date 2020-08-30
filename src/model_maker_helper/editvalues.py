@@ -15,14 +15,12 @@ def editvalues(labeldict, valdict, yamlpath):
     
     for c in range(count):
         if not valdict[c]:
-            print('Wat')
             return False
         
         print(labeldict[c])
         
         if str(labeldict[c]) in str(yamlfilekeys):
             pos = yamlfilekeys.index(labeldict[c]) # position of labeldict[c] in yamlfile
-            print(yamlfilekeys[pos], valdict[c])
             yamlfile.update({str(yamlfilekeys[pos]) : float(valdict[c])})
         
     with open(yamlpath[0], 'w') as f:

@@ -98,7 +98,6 @@ class BasicInterface(Plugin):
         # self.val.setAlignment(Qt.AlignCenter)
         
         self.count += 1
-        # print(self.count)
         
         self.updatefieldsfromyaml()
         self.form.addRow(self.label, self.val)
@@ -110,14 +109,10 @@ class BasicInterface(Plugin):
             self.showaffirmation("Values added from the Yaml file!")
         
     def updatefieldsfromyaml(self):
-        # print(self.labeldict)
         if self.yamlpath != ('', '') and self.yamlpath != '' and self.yamlpath is not None:
             self.yamlfile = openyamlfile(self.yamlpath)
             self.yamlfilekeys = self.yamlfile.keys()
             self.yamlfilevals = self.yamlfile.values()
-            # print(self.yamlfile)
-            # print(self.yamlfilevals)
-            # print(self.textboxdict)
             for c in range(self.count):
                 if self.labeldict[c] in self.yamlfilekeys:
                     self.obj = self.textboxdict[c]
@@ -133,10 +128,7 @@ class BasicInterface(Plugin):
         for c in range(self.count):
             self.obj = self.textboxdict[c]
             self.valdict[c] = self.obj.text()
-            
-        # print(self.labeldict)
-        # print(self.valdict)
-        
+                    
         flag = True
         flag = editvalues(self.labeldict, self.valdict, self.yamlpath)
         if not flag:
@@ -207,54 +199,3 @@ class BasicInterface(Plugin):
 
 
 
-
-
-
-
-# urdf = ""    
-        
-# def geturdf():
-#     urdf = rospy.get_param("/robot_description")
-#     try:
-#         f = open("temp.urdf", "w")
-#         f.write(urdf)
-#         print("[LOG] Temporary urdf file created!")
-#     except Exception as e:
-#         print(e)
-
-
-# import os
-# import rospy
-# import rospkg
-
-# from qt_gui.plugin import Plugin
-# from python_qt_binding import loadUi
-# from python_qt_binding.QtWidgets import QWidget, QPushButton
-
-# class BasicInterface(Plugin):
-
-#     def __init__(self, context):
-#         super(BasicInterface, self).__init__(context)
-#         self.setObjectName('BasicInterface')
-
-#         # Process standalone plugin command-line arguments
-#         from argparse import ArgumentParser
-#         parser = ArgumentParser()
-#         # Add argument(s) to the parser.
-#         parser.add_argument("-q", "--quiet", action="store_true",
-#                       dest="quiet",
-#                       help="Put plugin in silent mode")
-#         args, unknowns = parser.parse_known_args(context.argv())
-#         if not args.quiet:
-#             print ('arguments: ', args)
-#             print ('unknowns: ', unknowns)
-
-#         # Get path to UI file which should be in the "resource" folder of this package
-#         ui_file = os.path.join(rospkg.RosPack().get_path('rqt_mypkg'), 'resource', 'BasicInterface.ui')
-#         # Extend the widget with all attributes and children from UI file
-#         self._widget = QWidget()
-#         loadUi(ui_file, self._widget)
-#         # self.button = self._widget.findChild(QPushButton, "pushButton")
-#         context.add_widget(self._widget)
-#         # context.add_widget(self._widget)
-        
