@@ -86,6 +86,13 @@
        </property>
       </widget>
      </item>
+     <item row="2" column="0">
+      <widget class="QPushButton" name="selectxacrobtn">
+       <property name="text">
+        <string>Select Xacro file</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item>
@@ -194,7 +201,7 @@
       </widget>
      </item>
      <item row="2" column="2">
-      <widget class="QLineEdit" name="lineEdit">
+      <widget class="QLineEdit" name="deletevarnum">
        <property name="text">
         <string/>
        </property>
@@ -234,14 +241,14 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_3">
      <item>
-      <widget class="QPushButton" name="pushButton_2">
+      <widget class="QPushButton" name="updategazebobtn">
        <property name="text">
         <string>Update Gazebo</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="updaterobotbtn">
        <property name="text">
         <string>Update /robot_description</string>
        </property>

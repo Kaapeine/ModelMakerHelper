@@ -26,8 +26,8 @@ class BasicInterface(Plugin):
                       help="Put plugin in silent mode")
         args, unknowns = parser.parse_known_args(context.argv())
         if not args.quiet:
-            print 'arguments: ', args
-            print 'unknowns: ', unknowns
+            print ('arguments: ', args)
+            print ('unknowns: ', unknowns)
             
         # Save URDF file
         # geturdf()
@@ -60,6 +60,20 @@ class BasicInterface(Plugin):
         self.updatevalbutton = self._widget.findChild(QPushButton, 'updatevalues')
         self.updatevalbutton.clicked.connect(self.updatevalues)
         
+        #TODO 
+        self.deletevalbutton = self._widget.findChild(QPushButton, 'deletevariable')
+        self.deletevalbutton.clicked.connect(self.deletevalues)
+        self.deletevalnum = self._widget.findChild(QLineEdit, 'deletevarnum')
+        
+        self.updaterobotbtn = self._widget.findChild(QPushButton, 'updaterobotbtn')
+        self.updaterobotbtn.clicked.connect(self.updaterobot)
+        
+        self.selectxacrobtn = self._widget.findChild(QPushButton, 'selectxacrobtn')
+        self.selectxacrobtn.clicked.connect(self.selectxacro)
+        
+        self.updategazebobtn = self._widget.findChild(QPushButton, 'updategazebobtn')
+        self.updategazebobtn.clicked.connect(self.updategazebo)
+        
         # Show the widget
         context.add_widget(self._widget)
 
@@ -84,6 +98,7 @@ class BasicInterface(Plugin):
         # self.val.setAlignment(Qt.AlignCenter)
         
         self.count += 1
+        # print(self.count)
         
         self.updatefieldsfromyaml()
         self.form.addRow(self.label, self.val)
@@ -95,15 +110,19 @@ class BasicInterface(Plugin):
             self.showaffirmation("Values added from the Yaml file!")
         
     def updatefieldsfromyaml(self):
+        # print(self.labeldict)
         if self.yamlpath != ('', '') and self.yamlpath != '' and self.yamlpath is not None:
-            print(self.yamlpath)
             self.yamlfile = openyamlfile(self.yamlpath)
             self.yamlfilekeys = self.yamlfile.keys()
             self.yamlfilevals = self.yamlfile.values()
+            # print(self.yamlfile)
+            # print(self.yamlfilevals)
+            # print(self.textboxdict)
             for c in range(self.count):
                 if self.labeldict[c] in self.yamlfilekeys:
                     self.obj = self.textboxdict[c]
-                    self.obj.setText(str(self.yamlfilevals[c]))
+                    pos = self.yamlfilekeys.index(self.labeldict[c])
+                    self.obj.setText(str(self.yamlfilevals[pos]))
     
     def updatevalues(self):
         if self.yamlpath == "":
@@ -115,30 +134,65 @@ class BasicInterface(Plugin):
             self.obj = self.textboxdict[c]
             self.valdict[c] = self.obj.text()
             
-        print(self.labeldict)
-        print(self.valdict)
+        # print(self.labeldict)
+        # print(self.valdict)
         
-        self.flag = editvalues(self.labeldict, self.valdict, self.yamlpath)
-        if not self.flag:
+        flag = True
+        flag = editvalues(self.labeldict, self.valdict, self.yamlpath)
+        if not flag:
             self.showmessagebox("A field has been left empty")
-            self.flag = True
-            
-        print('[LOG] Values have been updated!')
-        self.showaffirmation('Values have been updated in the Yaml file')
+            flag = True
+        else: 
+            print('[LOG] Values have been updated!')
+            self.showaffirmation('Values have been updated in the Yaml file')
     
     def showmessagebox(self, text):
-            self.msg = QMessageBox()
-            self.msg.setIcon(QMessageBox.Warning)
-            self.msg.setWindowTitle('Warning!')
-            self.msg.setText(text)
-            self.msg.show()
+        self.msg = QMessageBox()
+        self.msg.setIcon(QMessageBox.Warning)
+        self.msg.setWindowTitle('Warning!')
+        self.msg.setText(text)
+        self.msg.show()
             
     def showaffirmation(self, text):
-            self.msg = QMessageBox()
-            self.msg.setIcon(QMessageBox.Warning)
-            self.msg.setWindowTitle('Done!')
-            self.msg.setText(text)
-            self.msg.show()
+        self.msg = QMessageBox()
+        self.msg.setIcon(QMessageBox.Warning)
+        self.msg.setWindowTitle('Done!')
+        self.msg.setText(text)
+        self.msg.show()
+    
+    def deletevalues(self):
+        num = self.deletevalnum.text()
+        #TODO Add delete values features
+        
+    def selectxacro(self):
+        self.xacropath = QFileDialog.getOpenFileName(self._widget, 'Open file', '/home/',"Xacro File (*.xacro)")
+        if self.xacropath != ('', ''):
+            self.showaffirmation("Xacro file added!")
+        
+    def updaterobot(self):
+        try:
+            self.urdfpath = os.path.join(os.getcwd(), "tempurdfs", "temp.urdf")
+            os.system("xacro --inorder {:s} > {:s}".format(self.xacropath[0], self.urdfpath))
+            os.system("rosparam set /robot_description {:s}".format(self.urdfpath))
+            
+            os.system("roslaunch model_maker_helper temp.launch")
+            self.showaffirmation("URDF updated! Tick and untick the robot description to refresh your model!")
+        except:
+            self.showmessagebox("Select your URDF file!")
+            
+    def updategazebo(self):
+        try:
+            os.system("rosservice call /gazebo/delete_model agv_v1")
+            os.system("roslaunch model_maker_helper gazebo.launch")
+            os.system("echo 'Gazebo model has been refreshed!'")
+        except:
+            os.system("ERROR!")
+                
+
+        
+        
+        
+        
     
     
     

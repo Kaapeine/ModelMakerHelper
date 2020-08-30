@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<launch>
+
+	<arg name="model" default="/home/vathsa/tempurdfs/temp.urdf" />
+
+	<param name="robot_description" command="xacro --inorder '$(arg model)'" />
+  	
+</launch>
