@@ -1,21 +1,18 @@
 <?xml version="1.0"?>
 
 <launch>
-	<arg name="model" default="/home/vathsa/tempurdfs/temp.urdf" />
+	<arg name="model" default="/home/vathsa/temp.urdf.xacro" />
 
-	<!-- param command="xacro inorder '$(arg model)'" name="robot_description"/> -->
-	<param textfile="$(arg model)" name="robot_description"/>
+	<param command="xacro --inorder '$(arg model)'" name="robot_description"/>
 
     <!-- State Publishers -->
 
-	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
-  	<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+	<!-- <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+  	<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" /> -->
 
     <!-- Spawn model and launch Gazebo -->
 
     <node name="mybot_spawn" pkg="gazebo_ros" type="spawn_model" output="screen"
-          args="-param robot_description -urdf -model agv_v1" />
+          args="-param robot_description -urdf -model robot" />
     
-    <node name="gazebo" pkg="gazebo_ros" type="gazebo" args="$(find agv_sim)/worlds/creech.world" />
-
 </launch>
