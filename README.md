@@ -23,3 +23,4 @@ rqt --standalone model_maker_helper --force-discover
 TODO:
 * Add dummy Gazebo launch file for users
 
+P.S. If you have a better name for the plugin, please send me a message xD
