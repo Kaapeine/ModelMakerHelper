@@ -181,11 +181,12 @@ class BasicInterface(Plugin):
             
     def updategazebo(self):
         try:
-            os.system("rosservice call /gazebo/delete_model agv_v1")
+            os.system("rosservice call /gazebo/delete_model robot")
             os.system("roslaunch model_maker_helper gazebo.launch")
-            os.system("echo 'Gazebo model has been refreshed!'")
+            print("echo 'Gazebo model has been refreshed!'")
+            self.showaffirmation("Gazebo model has been refreshed")
         except:
-            os.system("ERROR!")
+            os.system("Update gazebo error.")
                 
 
         
