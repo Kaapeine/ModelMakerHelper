@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>model_maker_helper</name>
+  <name>urdf_tweaker</name>
   <version>0.0.0</version>
-  <description>The model_maker_helper package</description>
+  <description>The urdf tweaker package</description>
   <maintainer email="msshrivathsa@gmail.com">Shrivathsa</maintainer>
 
   <license>TODO</license>

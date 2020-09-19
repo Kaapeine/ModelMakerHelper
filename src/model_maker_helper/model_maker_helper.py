@@ -34,7 +34,7 @@ class BasicInterface(Plugin):
 
         # Create QWidget
         self._widget = QWidget()
-        ui_file = os.path.join(rospkg.RosPack().get_path('model_maker_helper'), 'resource', 'BasicInterface.ui')
+        ui_file = os.path.join(rospkg.RosPack().get_path('urdf_tweaker'), 'resource', 'BasicInterface.ui')
         loadUi(ui_file, self._widget)
         self._widget.setFixedWidth(600)
         self._widget.setObjectName('BasicInterfaceUi')
