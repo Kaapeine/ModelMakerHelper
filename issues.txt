@@ -1,2 +1,0 @@
-Yaml file doesn't update for more than one parameter
-

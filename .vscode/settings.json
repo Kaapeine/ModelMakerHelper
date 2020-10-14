@@ -3,5 +3,7 @@
         "/home/vathsa/gazebo-simulations/devel/lib/python2.7/dist-packages",
         "/home/vathsa/catkin_ws/devel/lib/python2.7/dist-packages",
         "/opt/ros/kinetic/lib/python2.7/dist-packages"
-    ]
+    ],
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true
 }

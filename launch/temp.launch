@@ -2,8 +2,8 @@
 
 <launch>
 
-	<arg name="model" default="/home/vathsa/tempurdfs/temp.urdf" />
+	<arg name="model" default="/home/omen/catkin_ws/src/urdf_tweaker/src/urdf_tweaker/tempurdfs/temp.urdf" />
 
-	<param name="robot_description" command="xacro --inorder '$(arg model)'" />
+	<param name="robot_description" command="xacro '$(arg model)'" />
   	
 </launch>
