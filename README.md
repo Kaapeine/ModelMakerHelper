@@ -22,7 +22,4 @@ rqt --standalone model_maker_helper --force-discover
 10. Whenever you change any of the values, press 'Update YAML file' and 'Update /robot_description', in that order, and you will see the model change in Rviz. 
 11. The instructions are the pretty much the same for Gazebo, but you will have to use your own launch file for Gazebo. Tuning the parameters works the same way, just press the 'Update Gazebo' button. 
 
-TODO:
-* Add dummy Gazebo launch file for users
-
 P.S. If you have a better name for the plugin, please send me a message xD
