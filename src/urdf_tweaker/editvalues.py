@@ -14,7 +14,7 @@ def openyamlfile(yamlpath):
 def editvalues(labeldict, valdict, yamlpath):
     yamlfile = openyamlfile(yamlpath)
     count = len(labeldict)
-    yamlfilekeys = yamlfile.keys()
+    yamlfilekeys = list(yamlfile.keys())
     
     for c in range(count):
         if not valdict[c]:

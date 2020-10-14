@@ -4,7 +4,8 @@ import rospkg
 from collections import defaultdict
 import sys
 
-from . import editvalues
+#from . import editvalues
+from urdf_tweaker.editvalues import *
 
 from qt_gui.plugin import Plugin
 from python_qt_binding import loadUi
@@ -118,8 +119,8 @@ class BasicInterface(Plugin):
             if not self.yamlfile:
                 return False
             
-            self.yamlfilekeys = self.yamlfile.keys()
-            self.yamlfilevals = self.yamlfile.values()
+            self.yamlfilekeys = list(self.yamlfile.keys())
+            self.yamlfilevals = list(self.yamlfile.values())
             for c in range(self.count):
                 if self.labeldict[c] in self.yamlfilekeys:
                     self.obj = self.textboxdict[c]
@@ -171,11 +172,10 @@ class BasicInterface(Plugin):
         
     def updaterobot(self):
         try:
-            self.urdfpath = os.path.join(os.getcwd(), "tempurdfs", "temp.urdf")
-            os.system("xacro --inorder {:s} > {:s}".format(self.xacropath[0], self.urdfpath))
-            os.system("rosparam set /robot_description {:s}".format(self.urdfpath))
-            
-            os.system("roslaunch urdf_tweaker temp.launch")
+            self.urdfpath = os.path.join(os.path.dirname(os.path.realpath(__file__)), "tempurdfs", "temp.urdf")
+            os.system("xacro {:s} > {:s}".format(self.xacropath[0], self.urdfpath))
+            os.system("rosparam set /robot_description {:s}".format(self.urdfpath)) # For the first time only
+            os.system("roslaunch urdf_tweaker temp.launch") # Launch file converts URDF to Xacro and then updates /robot_description
             self.showaffirmation("URDF updated! Tick and untick the robot description to refresh your model!")
         except:
             self.showmessagebox("Select your URDF file!")
