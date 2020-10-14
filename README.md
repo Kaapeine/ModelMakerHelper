@@ -1,5 +1,7 @@
 # Model Maker Helper
 
+[The master branch is the version for ROS Kinetic, this branch is for ROS Noetic]
+
 I always found the whole process of fine tuning the parameters of a URDF model very tedious, even using Xacro. So, after learning to create ROS plugins using Qt, I made this tool that can make the whole process much faster and easier. With this tool, you can create a list of properties and modify them, and then click a button and have the changes reflect in Rviz and Gazebo. 
 
 To get the plugin, clone this repository into your catkin workspace and run `catkin_make`. 
