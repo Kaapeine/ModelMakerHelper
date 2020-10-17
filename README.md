@@ -6,7 +6,7 @@ I always found the whole process of fine tuning the parameters of a URDF model v
 
 To get the plugin, clone this repository into your catkin workspace and run `catkin_make`. 
 
-![Plugin window](misc/urdftweaker.png "Plugin window")
+![Plugin window](resource/urdftweaker.png "Plugin window")
 
 While the tool makes the tuning process faster, it requires a little setup. Instructions for use:
 1. Set up your URDf file to work with YAML files. Use [this.](http://wiki.ros.org/xacro#YAML_support)
