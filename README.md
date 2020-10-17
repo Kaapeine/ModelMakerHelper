@@ -12,7 +12,7 @@ While the tool makes the tuning process faster, it requires a little setup. Inst
 3. Run `roscore` or make sure there's a ROS server running. 
 4. Launch the plugin by using the command:
 ```
-rqt --standalone model_maker_helper --force-discover
+rqt --standalone urdf_tweaker
 ```
 5. Select your URDF and YAML file.
 6. Use 'Add' to add the parameters to the display. The format is 'text/property'. The text can be anything as long as the property is the same as the name used in your YAML and URDF file. 
@@ -21,5 +21,3 @@ rqt --standalone model_maker_helper --force-discover
 9. Press 'Update /robot_description' to see your model. 
 10. Whenever you change any of the values, press 'Update YAML file' and 'Update /robot_description', in that order, and you will see the model change in Rviz. 
 11. The instructions are the pretty much the same for Gazebo, but you will have to use your own launch file for Gazebo. Tuning the parameters works the same way, just press the 'Update Gazebo' button. 
-
-P.S. If you have a better name for the plugin, please send me a message xD
