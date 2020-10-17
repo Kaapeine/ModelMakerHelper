@@ -85,13 +85,13 @@ class BasicInterface(Plugin):
                 
         if len(self.names) != 2:
             self.newvarname.clear()
-            self.newvarname.setPlaceholderText('Enter "parent/property"')
+            self.newvarname.setPlaceholderText('Enter "description/property"')
             return
     
         self.labeldict[self.count] = self.names[1]
         
         # Creating new widgets for the new row
-        self.label = QLabel("{}. Adjust {:s} values of {:s}".format(self.count+1, self.names[1], self.names[0]))
+        self.label = QLabel("{}. {:s} - {:s}".format(self.count+1, self.names[0], self.names[1]))
         self.val = QLineEdit()
         self.textboxdict[self.count] = self.val
         
@@ -103,6 +103,7 @@ class BasicInterface(Plugin):
         
         self.updatefieldsfromyaml()
         self.form.addRow(self.label, self.val)
+        self.newvarname.clear()
         
     def getyamlpath(self):
         self.yamlpath = QFileDialog.getOpenFileName(self._widget, 'Open file', '/home/',"Yaml File (*.yaml)")
@@ -163,6 +164,8 @@ class BasicInterface(Plugin):
     
     def deletevalues(self):
         num = self.deletevalnum.text()
+        self.form.removeRow(int(num))
+        self.deletevalnum.clear()
         #TODO Add delete values features
         
     def selectxacro(self):
